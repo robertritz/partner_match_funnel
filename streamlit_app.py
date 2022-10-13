@@ -6,7 +6,7 @@ st.markdown("""# How many people meet your partner criteria where you live?
 
 There are many fish in the sea right? Well if you have too many criteria for your match, you are probably excluding a large number of those fish. Or maybe there are more fish than you expect!
 
-Use this app to discover how many people match your criteria where you live. Data is available for the **50 metro areas with the largest populations** in the United States.
+Use this app to discover how many people match your criteria where you live. Data is available for the **100 metro areas with the largest populations** in the United States.
 
 Data was collected from the [US Census American Community Survey](https://www.census.gov/data/developers/data-sets/acs-1year.html). This app originally appeared on [datafantic](https://datafantic.com/are-you-being-too-picky-in-a-partner).
 """)
@@ -108,6 +108,8 @@ def plot_funnel(pop_list, ratio):
         layout
         )
     fig.update_traces(texttemplate="%{value:,d}")
+    fig.update_xaxes(fixedrange=True)
+    fig.update_yaxes(fixedrange=True)
     return fig
 
 
@@ -117,7 +119,7 @@ def plot_funnel(pop_list, ratio):
 col1, col2 = st.columns(2)
 
 with col1:
-    location = st.selectbox(label="City/Metro Area", options=locations, index=27)
+    location = st.selectbox(label="City/Metro Area", options=locations, index=58)
     gender = st.selectbox(label='Gender', options=genders)
     edu = st.multiselect(label='Education Level(s)', options=edus)
 
@@ -138,7 +140,7 @@ if button:
             st.text("")
             st.markdown("---")
             st.markdown("## Your match funnel")
-            st.markdown(f"{pop_list[-1]:,.0f} people match your criteria in the {location}. ")
+            st.markdown(f"{pop_list[-1]:,.0f} people match your criteria in the {location} from a total population of {pop_list[0]:,.0f}.")
 
             st.plotly_chart(fig, config= dict(displayModeBar = False), use_container_width=True)
 
@@ -148,7 +150,7 @@ if button:
             st.markdown(f"""- {pop_list[1]:,.0f}: Population from above that is {" **or** ".join([x.title() for x in race])}.""")
             st.markdown(f"""- {pop_list[2]:,.0f}: Population from above that is also {gender}.""")
             st.markdown(f"""- {pop_list[3]:,.0f}: Population from above that is also {" **or** ".join([x.title() for x in age])}.""")
-            st.markdown(f"""- {pop_list[4]:,.0f}: Population from above that also has education of {" **or** ".join([x.capitalize() for x in edu])}.""")
+            st.markdown(f"""- {pop_list[4]:,.0f}: Population from above that also has education of {" **or** ".join([x.capitalize() for x in edu])}. This is estimated to be {round(ratio * 100, 0)}% of the population from above.""")
             st.markdown("""> Note: Education population estimates are derived for those above the age of 24. If your age range(s) include ages below 24, this might not be accurate estimate.""")
 
             st.markdown("## How does this app work?")
