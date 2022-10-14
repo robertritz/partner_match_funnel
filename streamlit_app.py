@@ -140,7 +140,7 @@ if button:
             st.text("")
             st.markdown("---")
             st.markdown("## Your match funnel")
-            st.markdown(f"{pop_list[-1]:,.0f} people match your criteria in the {location} from a total population of {pop_list[0]:,.0f}.")
+            st.markdown(f"An estimated {pop_list[-1]:,.0f} people match your criteria in the {location} from a total population of {pop_list[0]:,.0f}.")
 
             st.plotly_chart(fig, config= dict(displayModeBar = False), use_container_width=True)
 
